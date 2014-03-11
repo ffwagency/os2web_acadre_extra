@@ -1,0 +1,12 @@
+name = OS2Web Acadre ESDH Extra
+description = Extending of the OS2Web Acadre backend with extra constants set, a custom Acadre stream wrapper and a special input filter.
+core = 7.x
+package = OS2Web - ESDH
+version = 7.x-1.0-dev
+project = os2web_acadre_extra
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = filter
+dependencies[] = os2web_acadre_esdh
+features[features_api][] = api:2
+features[filter][] = os2web_acadre_esdh

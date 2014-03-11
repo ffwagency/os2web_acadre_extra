@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * This module extends the Acadre ESDH backend.
+ */
+
+// MM settings
+define('MM_BPA_BODY_FORMAT', 'os2web_acadre_esdh');
+define('MM_DISABLE_PATHAUTO', TRUE);
+define('MM_USE_ALTERNATIVE_FILE_URI_SCHEME', TRUE);
+
+// This constant / variable should only be set to true in development
+// environments! XML files can contain information that should not be
+// shared public and should be deleted.
+define('MM_KEEP_XML_FILES', variable_get('os2web_acadre_esdh_keep_xml_files', TRUE));
+
+// Setting this constant / variable to false will keep enclosure files
+// on the server for closed bullets. Notice these enclosures should not
+// be shared public!
+define('MM_DELETE_FILES_FOR_CLOSED', variable_get('os2web_acadre_esdh_delete_files_for_closed', FALSE));
+
+/**
+ * Implements hook_os2web_meeting_metadata_alter().
+ */
+function os2web_acadre_extra_os2web_meeting_metadata_alter(&$meeting) {
+  $date_obj = date_create($meeting['meeting_date_start']);
+  $meeting['title'] .= ' - ' . $date_obj->format('d-m-Y k\l. H:i');
+}
+
+/**
+ * Implements hook_stream_wrappers().
+ *
+ * We need a custom Acadre stream wrapper to avoid problems with
+ * Media Browser Plus when moving files.
+ */
+function os2web_acadre_extra_stream_wrappers() {
+  return array(
+    'acadre' => array(
+      'name' => t('Acadre'),
+      'class' => 'AcadreStreamWrapper',
+      'description' => t('Stream wrapper to the Acadre ESDH integration.'),
+      'type' => STREAM_WRAPPERS_LOCAL_HIDDEN,
+    ),
+  );
+}
+
+/**
+ * Acadre (acadre://) stream wrapper class.
+ *
+ * Provides support for storing fics documents with the Drupal file
+ * interface.
+ */
+class AcadreStreamWrapper extends DrupalPublicStreamWrapper {
+
+  /**
+   * Implements abstract public function getDirectoryPath()
+   */
+  public function getDirectoryPath() {
+    $path = variable_get('os2web_acadre_stream_wrapper_path', 'acadre');
+    $path = $path ? '/' . $path : '';
+    return parent::getDirectoryPath() . $path;
+  }
+
+  function getExternalUrl() {
+    $path = str_replace('\\', '/', $this->getTarget());
+    return $GLOBALS['base_url'] . '/' . self::getDirectoryPath() . '/' . drupal_encode_path($path);
+  }
+}
+
