@@ -10,6 +10,12 @@ define('MM_BPA_BODY_FORMAT', 'os2web_acadre_esdh');
 define('MM_DISABLE_PATHAUTO', TRUE);
 define('MM_USE_ALTERNATIVE_FILE_URI_SCHEME', TRUE);
 
+// Skip import of full document PDF file.
+define('MM_SKIP_FULL_DOC', variable_get('os2web_acadre_esdh_skip_full_doc', FALSE));
+
+// Skip import of all enclosure files.
+define('MM_SKIP_ENCLOSURES', variable_get('os2web_acadre_esdh_skip_enclosures', FALSE));
+
 // This constant / variable should only be set to true in development
 // environments! XML files can contain information that should not be
 // shared public and should be deleted.
