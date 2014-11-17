@@ -29,7 +29,7 @@ function os2web_acadre_extra_filter_default_formats() {
         'weight' => -49,
         'status' => 1,
         'settings' => array(
-          'allowed_html' => '<em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <table> <tr> <td> <th> <thead> <tfoot> <tbody> <h1> <h2> <h3> <b> <i> <p> <br /> <br>',
+          'allowed_html' => '<em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <table> <tr> <td> <th> <thead> <tfoot> <tbody> <h1> <h2> <h3> <b> <i> <p> <br /> <br> <a>',
           'filter_html_help' => 1,
           'filter_html_nofollow' => 1,
         ),
